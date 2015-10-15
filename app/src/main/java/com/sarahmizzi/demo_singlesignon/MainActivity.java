@@ -1,5 +1,6 @@
 package com.sarahmizzi.demo_singlesignon;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,6 +12,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.parse.LogInCallback;
 import com.parse.ParseAnonymousUtils;
 import com.parse.ParseException;
@@ -32,6 +34,19 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        toolbar.setVisibility(View.GONE);
+
+        final MaterialDialog dialog = new MaterialDialog.Builder(this)
+                .title(R.string.failed_title)
+                .content(R.string.failed_content)
+                .positiveText(R.string.try_again)
+                .build();
+
+        final MaterialDialog progressDialog = new MaterialDialog.Builder(this)
+                .title(R.string.progress_title)
+                .content(R.string.progress_content)
+                .progress(true, 0)
+                .build();
 
         ParseUser currentUser = ParseUser.getCurrentUser();
         if (currentUser != null) {
@@ -43,6 +58,8 @@ public class MainActivity extends AppCompatActivity {
         signIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                progressDialog.show();
+
                 final List<String> permissions = new ArrayList<>();
                 permissions.add("public_profile");
                 permissions.add("email");
@@ -54,8 +71,9 @@ public class MainActivity extends AppCompatActivity {
                     public void done(ParseUser user, ParseException err) {
                         Intent intent = new Intent(getApplicationContext(), LoggedInActivity.class);
                         if (user == null) {
-                            // TODO: Login failed
-                            Log.d("MyApp", "Uh oh. The user cancelled the Facebook login.");
+                            progressDialog.hide();
+                            dialog.show();
+                            Log.d("MyApp", "The user cancelled the Facebook login.");
                         } else if (user.isNew()) {
                             Log.d("MyApp", "User signed up and logged in through Facebook!");
                             startActivity(intent);
@@ -72,11 +90,14 @@ public class MainActivity extends AppCompatActivity {
         skipLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                progressDialog.show();
+
                 ParseAnonymousUtils.logIn(new LogInCallback() {
                     @Override
                     public void done(ParseUser user, ParseException e) {
                         if (e != null) {
-                            // TODO Try again
+                            progressDialog.hide();
+                            dialog.show();
                             Log.d("MyApp", "Anonymous login failed.");
                         } else {
                             Intent intent = new Intent(getApplicationContext(), LoggedInActivity.class);
@@ -88,28 +109,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
     }
 
     @Override
