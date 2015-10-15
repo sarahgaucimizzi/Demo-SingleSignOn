@@ -13,6 +13,6 @@
     <string name="failed_content">Something went wrong. Please try again.</string>
     <string name="try_again">Try Again</string>
 
-    <string name="progress_title">Logging you in</string>
+    <string name="progress_title">Loading</string>
     <string name="progress_content">Please wait...</string>
 </resources>

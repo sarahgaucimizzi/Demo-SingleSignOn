@@ -49,21 +49,36 @@ public class LoggedInActivity extends AppCompatActivity {
                 public void onClick(View v) {
                     progressDialog.show();
 
-                    ParseUser.logOut();
-                    ParseUser currentUser = ParseUser.getCurrentUser();
+                    try {
+                        ParseUser.logOut();
+                        ParseUser currentUser = ParseUser.getCurrentUser();
 
-                    if (currentUser == null) {
-                        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                        startActivity(intent);
+                        if (currentUser == null) {
+                            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                            startActivity(intent);
+                        }
+                        else{
+                            progressDialog.hide();
+                            dialog.show();
+                        }
                     }
-                    else{
+                    catch(Exception e){
                         progressDialog.hide();
                         dialog.show();
                     }
                 }
             });
         } else {
-            userDetails.setText("You have logged in successfully using Facebook.");
+            ParseUser user = ParseUser.getCurrentUser();
+            String showText = "Hello, " + user.get("name") + ". You have logged in successfully using Facebook.";
+            if(user.getEmail() != null){
+                showText += " Your email address is " + user.getEmail();
+            }
+            if (user.get("birthDate") != null) {
+                showText += " Your birthday is on " + user.get("birthDate");
+
+            }
+            userDetails.setText(showText);
             logoutButton.setVisibility(View.VISIBLE);
             signInButton.setVisibility(View.GONE);
             logoutButton.setOnClickListener(new View.OnClickListener() {
@@ -71,14 +86,20 @@ public class LoggedInActivity extends AppCompatActivity {
                 public void onClick(View v) {
                     progressDialog.show();
 
-                    ParseUser.logOut();
-                    ParseUser currentUser = ParseUser.getCurrentUser();
+                    try {
+                        ParseUser.logOut();
+                        ParseUser currentUser = ParseUser.getCurrentUser();
 
-                    if (currentUser == null) {
-                        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                        startActivity(intent);
+                        if (currentUser == null) {
+                            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                            startActivity(intent);
+                        }
+                        else{
+                            progressDialog.hide();
+                            dialog.show();
+                        }
                     }
-                    else{
+                    catch(Exception e){
                         progressDialog.hide();
                         dialog.show();
                     }
