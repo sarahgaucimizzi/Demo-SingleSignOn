@@ -1,12 +1,18 @@
 <resources>
     <string name="app_name">Demo - Single Sign On</string>
+    <string name="title_activity_login">Login</string>
     <string name="title_activity_logged_in">Logged In</string>
     <string name="facebook_app_id">707790459355434</string>
 
     <string name="sign_in">Sign in</string>
+    <string name="sign_in_with_fb">Sign in with Facebook</string>
+    <string name="register_login">Register / Login</string>
     <string name="skip_login">Skip login</string>
+    <string name="enter_email">Enter your email</string>
+    <string name="enter_password">Enter your password</string>
     <string name="logout">Logout</string>
 
+    <string name="enter_credentials">Enter your Credentials</string>
     <string name="welcome">Welcome!</string>
 
     <string name="failed_title">Oops!</string>

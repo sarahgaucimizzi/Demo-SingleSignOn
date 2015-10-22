@@ -11,10 +11,10 @@ public class Application extends android.app.Application{
     @Override
     public void onCreate() {
         super.onCreate();
-
+        // Initialise Facebook SDK
         FacebookSdk.sdkInitialize(getApplicationContext());
 
-        // Enable Local Datastore.
+        // Initialise Parse SDK
         Parse.enableLocalDatastore(this);
 
         Parse.initialize(this, "fzGiBgv40QvrSUSkCG1pBRbh6VUpqiUl0lZmPXtb", "EQP64wY9B3SIEQocYoynU8qaVdWHEIGxA6mAR7h8");
