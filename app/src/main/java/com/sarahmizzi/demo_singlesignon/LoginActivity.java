@@ -66,7 +66,9 @@ public class LoginActivity extends AppCompatActivity {
                                     if (user != null) {
                                         // Username and password match, start LoggedInActivity
                                         Intent intent = new Intent(getApplicationContext(), LoggedInActivity.class);
+                                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                                         startActivity(intent);
+                                        finish();
                                     } else {
                                         // Something went wrong, show error dialog
                                         progressDialog.hide();
@@ -88,7 +90,9 @@ public class LoginActivity extends AppCompatActivity {
                                     if (e == null) {
                                         // Sign up successful, start LoggedInActivity
                                         Intent intent = new Intent(getApplicationContext(), LoggedInActivity.class);
+                                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                                         startActivity(intent);
+                                        finish();
                                     } else {
                                         // Something went wrong, show error dialog
                                         progressDialog.hide();

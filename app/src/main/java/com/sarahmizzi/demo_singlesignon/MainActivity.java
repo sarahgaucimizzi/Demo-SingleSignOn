@@ -43,7 +43,9 @@ public class MainActivity extends AppCompatActivity {
         // Check if currentUser is set in cache -> if yes -> logged in -> go to LoggedInActivity
         if(ParseUser.getCurrentUser() != null){
             Intent intent = new Intent(getApplicationContext(), LoggedInActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
+            finish();
         }
 
         final MaterialDialog dialog = new MaterialDialog.Builder(this)
@@ -85,6 +87,7 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void done(ParseUser user, ParseException err) {
                         Intent intent = new Intent(getApplicationContext(), LoggedInActivity.class);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                         if (user == null) {
                             // Something went wrong, show error dialog
                             progressDialog.hide();
@@ -101,6 +104,7 @@ public class MainActivity extends AppCompatActivity {
 
                             // Start LoggedInActivity
                             startActivity(intent);
+                            finish();
                         } else {
                             // Link Parse User to Facebook Account
                             ParseFacebookUtils.linkInBackground(user, AccessToken.getCurrentAccessToken());
@@ -112,6 +116,7 @@ public class MainActivity extends AppCompatActivity {
 
                             // Start LoggedInActivity
                             startActivity(intent);
+                            finish();
                         }
                     }
                 });
@@ -137,7 +142,9 @@ public class MainActivity extends AppCompatActivity {
                         } else {
                             // Anonymous user creation successful, start LoggedInActivity
                             Intent intent = new Intent(getApplicationContext(), LoggedInActivity.class);
+                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                             startActivity(intent);
+                            finish();
                             Log.d(TAG, "Anonymous user logged in.");
                         }
                     }
